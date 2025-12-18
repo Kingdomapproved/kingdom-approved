@@ -1,0 +1,108 @@
+// Kingdom Approved – Starter Website (Frontend + Integration-Ready)
+// Tech: React + Tailwind (Next.js compatible)
+// NOTE: Stripe, PayPal, bookings, and file uploads require backend setup.
+
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+export default function KingdomApproved() {
+  const [session, setSession] = useState("15");
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6 space-y-10">
+
+      {/* HERO */}
+      <section className="text-center space-y-4">
+        <h1 className="text-4xl font-bold">Kingdom Approved</h1>
+        <p className="text-gray-600">Faith-Based Coaching • Music • Merchandise</p>
+      </section>
+
+      {/* LOGO UPLOAD */}
+      <Card className="max-w-xl mx-auto">
+        <CardContent className="space-y-4">
+          <h2 className="text-xl font-semibold">Upload Your Logo</h2>
+          <input type="file" accept="image/*" />
+          <p className="text-sm text-gray-500">(Stored via backend or cloud storage)</p>
+        </CardContent>
+      </Card>
+
+      {/* BOOKING */}
+      <Card className="max-w-xl mx-auto">
+        <CardContent className="space-y-4">
+          <h2 className="text-xl font-semibold">Book Exhort Coaching</h2>
+
+          <select
+            className="w-full border p-2"
+            value={session}
+            onChange={(e) => setSession(e.target.value)}
+          >
+            <option value="15">15 Minutes – $20</option>
+            <option value="30">30 Minutes – $40</option>
+          </select>
+
+          <input type="datetime-local" className="w-full border p-2" />
+
+          <p className="text-sm text-gray-600">
+            • Available 5:00 AM – 10:00 PM<br />
+            • 20% deposit required at booking<br />
+            • Remaining balance auto-charged 1 hour before session
+          </p>
+
+          <Button className="w-full">Pay Deposit (Stripe / PayPal)</Button>
+        </CardContent>
+      </Card>
+
+      {/* MUSIC */}
+      <Card className="max-w-xl mx-auto">
+        <CardContent className="space-y-4">
+          <h2 className="text-xl font-semibold">Music Library</h2>
+          <audio controls className="w-full">
+            <source src="/music/sample.mp3" type="audio/mpeg" />
+          </audio>
+          <Button variant="outline">Download Track</Button>
+        </CardContent>
+      </Card>
+
+      {/* SHOP */}
+      <Card className="max-w-xl mx-auto">
+        <CardContent className="space-y-4">
+          <h2 className="text-xl font-semibold">Kingdom Approved Shop</h2>
+
+          <div className="border p-3 rounded">
+            <h3 className="font-semibold">Branded T‑Shirt</h3>
+            <p>$25.00</p>
+            <Button>Add to Cart</Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* FOOTER */}
+      <footer className="text-center text-sm text-gray-500">
+        © {new Date().getFullYear()} Kingdom Approved
+      </footer>
+    </div>
+  );
+}
+
+/* ================= BACKEND REQUIREMENTS =================
+1. Booking System
+   - Store appointments (date, time, duration)
+   - Enforce 5am–10pm booking window
+
+2. Payments
+   - Stripe + PayPal SDK
+   - Charge 20% deposit immediately
+   - Schedule remaining 80% charge 1 hour before session
+
+3. Music
+   - Secure file storage (S3, Cloudinary)
+   - Control download permissions
+
+4. Shop
+   - Products, cart, checkout
+   - Stripe checkout integration
+
+5. Logo Upload
+   - Image storage + admin dashboard
+======================================================== */
